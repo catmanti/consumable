@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<h5 class="text-end">Hi {{ user.username }}!</h5>
+{% else %}
+<div class="text-end">
+
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Log In</a>
+</div>
+{% endif %}
+
+{% endblock content %}

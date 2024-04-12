@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-4">
+
+    <form class="row g-3" method="GET">
+        <div class="col-6 col-sm-3">
+            <select name="item" class="form-select">
+                <option value="">All Units</option>
+                {% for unit in units %}
+                <option value="{{ unit.id }}">{{ unit.unit_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-6 col-sm-3">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </form>
+
+    <div class="container">
+
+        <ul>
+            {% for order in orders %}
+            <li>{{order}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endblock content %}
