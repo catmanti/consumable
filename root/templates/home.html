@@ -3,11 +3,14 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-<h5 class="text-end">Hi {{ user.username }}!</h5>
+<form class=" text-end" action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <span class="h4">Hi {{ user.username }}!</span>
+    <button class="btn btn-link btn-sm" type="submit">Log Out<button>
+</form>
 {% else %}
 <div class="text-end">
-
-    <p>You are not logged in</p>
+    <span class="h4">You are not logged in</span>
     <a href="{% url 'login' %}">Log In</a>
 </div>
 {% endif %}
