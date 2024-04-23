@@ -3,8 +3,8 @@
 {% block content %}
 <div class="container mt-4">
 
-    <form class="row g-3" method="GET">
-        <div class="col-6 col-sm-3">
+    <form class="d-flex justify-content-center" method="GET">
+        <div>
             <select name="item" class="form-select">
                 <option value="">All Units</option>
                 {% for unit in units %}
@@ -12,12 +12,12 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="col-6 col-sm-3">
+        <div>
             <button type="submit" class="btn btn-primary">Filter</button>
         </div>
     </form>
 
-    <div class="container">
+    <div class="d-flex justify-content-center">
 
         <ul>
             {% for order in orders %}

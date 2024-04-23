@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from .models import Unit, Item, Order
+from .models import Unit, Item
+from .models import Order
 from .forms import ContactForm
 
 
 def index(request):
-    print("at beginning")
+    """The Home Page"""
     if request.method == "POST":
         print("at POST")
         form = ContactForm(request.POST)
@@ -28,10 +29,11 @@ def index(request):
             "catman": items,
             "form": form,
         }
-        return render(request, "home.html", context)
+        return render(request, "consume/home.html", context)
 
 
 def order(request):
+    """To Select Orders in Drop down"""
     units = Unit.objects.all()
     selected_item = request.GET.get("item")
 
@@ -41,8 +43,8 @@ def order(request):
         orders = Order.objects.all()
 
     context = {
-        "orders": orders,
-        "selected_item ": selected_item,
-        "units": units,
+        "orders": orders,  # For The list
+        "selected_item ": selected_item,  # For DropDown
+        "units": units,  # For DropDown
     }
-    return render(request, "order_form.html", context)
+    return render(request, "consume/order_form.html", context)
