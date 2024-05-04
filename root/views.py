@@ -1,7 +1,7 @@
 from django.db.models import Sum, Q
 from django.shortcuts import render
 from .models import Unit, Item
-from .models import Order, OrderDetail
+from .models import Order
 from .forms import ContactForm
 
 
