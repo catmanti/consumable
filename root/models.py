@@ -20,7 +20,7 @@ class Item(models.Model):
     item_name = models.CharField(max_length=55, unique=True)
 
     def __str__(self):
-        return f"{self.item_name} - {self.id}"
+        return f"{self.item_name}"
 
 
 class Supplier(models.Model):

@@ -1,6 +1,7 @@
+from django.db.models import Sum, Q
 from django.shortcuts import render
 from .models import Unit, Item
-from .models import Order
+from .models import Order, OrderDetail
 from .forms import ContactForm
 
 
@@ -48,3 +49,28 @@ def order(request):
         "units": units,  # For DropDown
     }
     return render(request, "consume/order_form.html", context)
+
+
+def new_order(request):
+    """To Add New Orders
+    todo:
+    - get the list of items and add in the form
+    """
+    context = {}
+    unit_id = 3
+    if request.method == "POST":
+        print("....at POST")
+    else:
+        last_order = Order.objects.filter(unit_id=unit_id).last()
+        if last_order:
+            items_with_amounts = Item.objects.annotate(
+                amount=Sum(
+                    "orderdetail__amount", filter=Q(orderdetail__order_id=last_order.id)
+                )
+            )
+        else:
+            items_with_amounts = Item.objects.all()
+        context = {
+            "item_list": items_with_amounts,
+        }
+    return render(request, "consume/new_order_form.html", context)

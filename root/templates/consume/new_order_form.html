@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-4">
+
+  <form class="" method="POST">
+    {% csrf_token %}
+    <div class="d-flex justify-content-center ">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Item</th>
+              <th scope="col">Last Order</th>
+              <th scope="col">New Order</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in item_list %}
+            <tr>
+              <th scope="row">{{forloop.counter}}</th>
+              <td>{{item.item_name}}</td>
+              <td>{{item.amount|default:"-"}}</td>
+              <td>@mdo</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-end">
+          <button type=" submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock content %}
