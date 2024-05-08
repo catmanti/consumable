@@ -1,7 +1,9 @@
+from datetime import date
 from django.db.models import Sum, Q
+from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Unit, Item
-from .models import Order
+from .models import Order, OrderDetail
 from .forms import ContactForm
 
 
@@ -52,15 +54,32 @@ def order(request):
 
 
 def new_order(request):
-    """To Add New Orders
+    """This method is used to create new order with items and quantities
+    in the form and save it in the database and return a success message
     todo:
-    - get the list of items and add in the form
+    Need to make it work with multiple units in the future
+    Get unit_id from the request.user
     """
     context = {}
-    unit_id = 3
+    unit_id = 6
+    unit = Unit.objects.get(id=unit_id)
     if request.method == "POST":
         print("....at POST")
-    else:
+        quantities = {}
+        for key, value in request.POST.items():
+            if key.startswith("quantity_") and value:
+                item_id = int(key.split("_")[1])
+                quantities[item_id] = int(value)
+
+        new_order = Order.objects.create(order_date=date.today(), unit_id=unit_id)
+        for item_id, quantity in quantities.items():
+            order_detail = OrderDetail(
+                order=new_order, item_id=item_id, amount=quantity
+            )
+            order_detail.save()
+        return HttpResponse("Order submitted successfully!")
+
+    else:  # get the last order from the database related to unit_id
         last_order = Order.objects.filter(unit_id=unit_id).last()
         if last_order:
             items_with_amounts = Item.objects.annotate(
@@ -68,9 +87,10 @@ def new_order(request):
                     "orderdetail__amount", filter=Q(orderdetail__order_id=last_order.id)
                 )
             )
-        else:
+        else:  # get an empty item list
             items_with_amounts = Item.objects.all()
         context = {
             "item_list": items_with_amounts,
+            "unit_name": unit,
         }
     return render(request, "consume/new_order_form.html", context)

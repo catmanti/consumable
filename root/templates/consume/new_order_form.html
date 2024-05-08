@@ -2,12 +2,12 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container mt-4">
-
+  <div class="d-flex justify-content-center">{{ unit_name.unit_name }}</div>
   <form class="" method="POST">
     {% csrf_token %}
     <div class="d-flex justify-content-center ">
       <div>
-        <table>
+        <table class="table table-ligh table-striped">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -22,7 +22,8 @@
               <th scope="row">{{forloop.counter}}</th>
               <td>{{item.item_name}}</td>
               <td>{{item.amount|default:"-"}}</td>
-              <td>@mdo</td>
+              <td><input class="form-control" type="number" placeholder=0 name="quantity_{{ item.id }}" min="0"
+                  max="50"></td>
             </tr>
             {% endfor %}
           </tbody>
