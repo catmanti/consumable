@@ -3,6 +3,7 @@ This has basic models
 """
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Unit(models.Model):
@@ -12,6 +13,17 @@ class Unit(models.Model):
 
     def __str__(self):
         return f"{self.unit_name} - {self.id}"
+
+
+class Employee(models.Model):
+    """Employees like John, Mary, Peter"""
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    employee_name = models.CharField(max_length=55, unique=False)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.employee_name}"
 
 
 class Item(models.Model):

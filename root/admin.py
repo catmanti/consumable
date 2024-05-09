@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Unit, Stock, Item, Supplier, OrderDetail, Order
+from .models import Unit, Stock, Item, Supplier, OrderDetail, Order, Employee
 
 
 class IdAdmin(admin.ModelAdmin):
@@ -14,3 +14,4 @@ admin.site.register(Item)
 admin.site.register(Supplier)
 admin.site.register(OrderDetail)
 admin.site.register(Order)
+admin.site.register(Employee)

@@ -1,4 +1,5 @@
 from datetime import date
+from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Q
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -53,6 +54,7 @@ def order(request):
     return render(request, "consume/order_form.html", context)
 
 
+@login_required
 def new_order(request):
     """This method is used to create new order with items and quantities
     in the form and save it in the database and return a success message
@@ -60,11 +62,10 @@ def new_order(request):
     Need to make it work with multiple units in the future
     Get unit_id from the request.user
     """
+    unit_id = request.user.employee.unit_id
     context = {}
-    unit_id = 6
     unit = Unit.objects.get(id=unit_id)
     if request.method == "POST":
-        print("....at POST")
         quantities = {}
         for key, value in request.POST.items():
             if key.startswith("quantity_") and value:
