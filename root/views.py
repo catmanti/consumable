@@ -3,9 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Q
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Unit, Item
-from .models import Order, OrderDetail
+from django.views.generic import ListView
 from .forms import ContactForm
+from .models import Order, OrderDetail, Item, Stock, Unit
 
 
 def index(request):
@@ -95,3 +95,7 @@ def new_order(request):
             "unit_name": unit,
         }
     return render(request, "consume/new_order_form.html", context)
+
+
+class StockView(ListView):
+    model = Stock
