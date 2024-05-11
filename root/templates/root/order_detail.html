@@ -1,0 +1,3 @@
+{% for item in object.orderdetail_set.all %}
+<p> {{item}} {{item.amount}} {{item.item}}</p>
+{% endfor %}

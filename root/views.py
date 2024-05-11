@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Q
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .forms import ContactForm
 from .models import Order, OrderDetail, Item, Stock, Unit
 
@@ -71,8 +71,9 @@ def new_order(request):
             if key.startswith("quantity_") and value:
                 item_id = int(key.split("_")[1])
                 quantities[item_id] = int(value)
-
+        # create a new order with date and unit_id.
         new_order = Order.objects.create(order_date=date.today(), unit_id=unit_id)
+        # create a new orderdetail with order_id and item_id and amount
         for item_id, quantity in quantities.items():
             order_detail = OrderDetail(
                 order=new_order, item_id=item_id, amount=quantity
@@ -80,8 +81,10 @@ def new_order(request):
             order_detail.save()
         return HttpResponse("Order submitted successfully!")
 
-    else:  # get the last order from the database related to unit_id
+        # GET Method: get the last order from the database
+    else:
         last_order = Order.objects.filter(unit_id=unit_id).last()
+        # get the items with amounts
         if last_order:
             items_with_amounts = Item.objects.annotate(
                 amount=Sum(
@@ -99,3 +102,7 @@ def new_order(request):
 
 class StockView(ListView):
     model = Stock
+
+
+class OrderView(DetailView):
+    model = Order
