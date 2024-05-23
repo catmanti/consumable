@@ -1,5 +1,6 @@
 from datetime import date
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum, Q
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -100,8 +101,13 @@ def new_order(request):
     return render(request, "consume/new_order_form.html", context)
 
 
-class StockView(ListView):
+class StockView(LoginRequiredMixin, ListView):
     model = Stock
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["unit_name"] = Unit.objects.get(id=self.request.user.employee.unit_id)
+        return context
 
 
 class OrderView(DetailView):

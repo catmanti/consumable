@@ -2,6 +2,20 @@
 {% load crispy_forms_tags %}
 {% block title %}Login{% endblock %}
 
+{% block extra_css %}
+<style>
+    .login {
+        width: 400px;
+        height: 300px;
+        background-color: whitesmoke;
+        margin: 100px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 255, 0.3);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="login">

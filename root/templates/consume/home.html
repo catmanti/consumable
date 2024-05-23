@@ -1,14 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+{% endblock %}
+
 {% block content %}
 {% include "consume/navbar.html" %}
-<div class="container">
+
+<div class="container" style="font-family: 'Tangerine', serif; font-size: 48px;">
 
     <div class="d-flex  justify-content-center mb-1">
-        <div class="p-2 bg-secondary">Flex item is long long long</div>
+        <div class="p-2" style ="text-shadow: 4px 4px 4px #aaa;">Flex item is long long long</div>
+        <span class="material-icons">face</span>
         <div class="p-2 bg-primary">Flex item 2</div>
     </div>
 
 </div>
-
 {% endblock content %}
