@@ -22,7 +22,7 @@
 
         <ul>
             {% for order in orders %}
-            <li>{{order}}</li>
+            <li><a href="{% url 'order_detail' order.id %}">{{order}}</li>
             {% endfor %}
         </ul>
     </div>

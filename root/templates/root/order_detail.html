@@ -1,3 +1,34 @@
-{% for item in object.orderdetail_set.all %}
-<p> {{item}} {{item.amount}} {{item.item}}</p>
-{% endfor %}
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% include "consume/navbar.html" %}
+<div class="container">
+    <div class="d-flex justify-content-center">{{ object.unit}}</div>
+    <div class=" justify-content-center ">
+        <div>
+            <div> Order Date: {{ object.order_date }}</div>
+            <div> Order ID: {{ object.id }}</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item</th>
+                        <th class=" d-flex justify-content-center" scope="col">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in object.orderdetail_set.all %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{item.item}}</td>
+                        <td class=" d-flex justify-content-center">{{item.amount}}</td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+            <a class="btn btn-primary" href="{% url 'order'%}" role="button">Back to Orders</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

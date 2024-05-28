@@ -2,16 +2,16 @@
 {% block content %}
 {% include "consume/navbar.html" %}
 <div class="container">
-    <div class="d-flex justify-content-center">{{ unit_name.unit_name }}</div>
-    <div class="d-flex justify-content-center ">
+    <div class="d-flex justify-content-center">Stock Available</div>
+    <div class="justify-content-center ">
         <div>
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Item</th>
-                        <th scope="col">Minimum Stock</th>
-                        <th scope="col">Stock Available</th>
+                        <th class="text-center"scope="col">Minimum Stock</th>
+                        <th class=" text-center"scope="col">Stock Available</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,8 +19,8 @@
                     <tr>
                         <th scope="row">{{forloop.counter}}</th>
                         <td>{{ object.item }}</td>
-                        <td>{{ object.minimum_stock }}</td>
-                        <td>{{ object.stock_available }}</td>
+                        <td class="text-center ">{{ object.minimum_stock }}</td>
+                        <td class=" text-center ">{{ object.stock_available }}</td>
                     </tr>
 
                     {% endfor %}
